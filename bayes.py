@@ -174,33 +174,11 @@ def question_3(patient):
                 temp_list = copy.deepcopy(symptoms)
                 # try 'T' first
                 temp_list[i] = 'T'
-                prob = calculate_probability(disease, temp_list)
-                if prob > max_list[0]:
-                    max_list = [prob, i, temp_list[i], disease.findings[i]]
-                elif prob == max_list[0]:
-                    if disease.findings[i].lower() < max_list[3].lower():
-                        max_list = [prob, i, temp_list[i], disease.findings[i]]
-
-                if prob < min_list[0]:
-                    min_list = [prob, i, temp_list[i], disease.findings[i]]
-                elif prob == min_list[0]:
-                    if disease.findings[i].lower() < min_list[3].lower():
-                        min_list = [prob, i, temp_list[i], disease.findings[i]]
+                max_list, min_list = question3_helper(temp_list, max_list, min_list, disease, i)
 
                 # try 'F' now
                 temp_list[i] = 'F'
-                prob = calculate_probability(disease, temp_list)
-                if prob > max_list[0]:
-                    max_list = [prob, i, temp_list[i], disease.findings[i]]
-                elif prob == max_list[0]:
-                    if disease.findings[i].lower() < max_list[3].lower():
-                        max_list = [prob, i, temp_list[i], disease.findings[i]]
-
-                if prob < min_list[0]:
-                    min_list = [prob, i, temp_list[i], disease.findings[i]]
-                elif prob == min_list[0]:
-                    if disease.findings[i].lower() < min_list[3].lower():
-                        min_list = [prob, i, temp_list[i], disease.findings[i]]
+                max_list, min_list = question3_helper(temp_list, max_list, min_list, disease, i)
 
         if max_list[1] == -1:
             result_max_list = ['none', 'N']
@@ -217,6 +195,22 @@ def question_3(patient):
 
         result[disease.name] = result_list
     return result
+
+def question3_helper(symptoms, max_list, min_list, disease, i):
+    prob = calculate_probability(disease, symptoms)
+    if prob > max_list[0]:
+        max_list = [prob, i, symptoms[i], disease.findings[i]]
+    elif prob == max_list[0]:
+        if disease.findings[i].lower() < max_list[3].lower():
+            max_list = [prob, i, symptoms[i], disease.findings[i]]
+
+    if prob < min_list[0]:
+        min_list = [prob, i, symptoms[i], disease.findings[i]]
+    elif prob == min_list[0]:
+        if disease.findings[i].lower() < min_list[3].lower():
+            min_list = [prob, i, symptoms[i], disease.findings[i]]
+
+    return max_list, min_list
 
 def get_disease(input_file):
     """ return a disease object from following 4 lines in the file """
