@@ -1,0 +1,49 @@
+D = disease
+S = symptom
+
+for each disease:
+1st line: P(D)
+3rd line: P(S|D)
+4th line: P(S|D')
+
+// For example input from PDF:
+P(Diabetes) = 0.13
+
+P(thirst|diabetes) = 0.6
+P(wloss|diabetes) = 0.7
+P(bvision|diabetes) = 0.9
+
+P(thirst|diab') = 0.2
+P(wloss|diab') = 0.3
+P(bvision|diab') = 0.015
+
+thirst -> T, wloss -> F, bvision -> U
+
+P(t,w) = 0.18
+
+0.18 * .13
+------------
+0.18 * .13 + (0.2 * 0.7) *0.87)
+
+(0.13)(0.6)(0.3)
+-----------------
+Sameasnomiator + (1-0.13)(0.2)(0.7)
+
+
+Q1:
+P(diabetes) * P(thirst|diabetes) * P(wloss'|diabetes)
+-----------------------------------------------------
+P(thirst) + P(wloss')
+
+
+P(thirst) = P(thirst|diabetes) * P(diabetes) + P(thirst|diabetes') * P(diabetes')
+
+
+.13 * .6 * .3 * .9
+-----
+(1) + .87 * .4 * .7 * .015
+
+0.2106
+.003654
+.982937512
+
